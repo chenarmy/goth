@@ -3,9 +3,9 @@ package intercom_test
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/chenarmy/goth"
+	"github.com/chenarmy/goth/providers/intercom"
 	"github.com/gorilla/pat"
-	"github.com/markbates/goth"
-	"github.com/markbates/goth/providers/intercom"
 	"github.com/stretchr/testify/assert"
 	"net/http"
 	"net/http/httptest"

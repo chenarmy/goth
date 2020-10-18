@@ -1,8 +1,8 @@
 package steam_test
 
 import (
-	"github.com/markbates/goth"
-	"github.com/markbates/goth/providers/steam"
+	"github.com/chenarmy/goth"
+	"github.com/chenarmy/goth/providers/steam"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"

@@ -1,8 +1,8 @@
 package slack_test
 
 import (
-	"github.com/markbates/goth"
-	"github.com/markbates/goth/providers/slack"
+	"github.com/chenarmy/goth"
+	"github.com/chenarmy/goth/providers/slack"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -1,8 +1,8 @@
 package salesforce_test
 
 import (
-	"github.com/markbates/goth"
-	"github.com/markbates/goth/providers/salesforce"
+	"github.com/chenarmy/goth"
+	"github.com/chenarmy/goth/providers/salesforce"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )

@@ -1,8 +1,8 @@
 package soundcloud_test
 
 import (
-	"github.com/markbates/goth"
-	"github.com/markbates/goth/providers/soundcloud"
+	"github.com/chenarmy/goth"
+	"github.com/chenarmy/goth/providers/soundcloud"
 	"github.com/stretchr/testify/assert"
 	"os"
 	"testing"
