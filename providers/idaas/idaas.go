@@ -15,7 +15,7 @@ import (
 )
 
 var (
-	issuerURL  = "https://magicmall.cloudidaas.com/open/oauth2/authorize"
+	issuerURL  = "https://magicmall.cloudidaas.com"
 	authURL    = "https://magicmall.cloudidaas.com/open/oauth2/authorize"
 	tokenURL   = "https://api.open.cloudidaas.com/oauth2/v1/token"
 	profileURL = "https://api.open.cloudidaas.com/oauth2/v1/userinfo"
