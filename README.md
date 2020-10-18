@@ -72,6 +72,7 @@ $ go get github.com/chenarmy/goth
 * Yahoo
 * Yammer
 * Yandex
+* Idaas
 
 ## Examples
 
