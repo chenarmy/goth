@@ -15,10 +15,10 @@ import (
 )
 
 var (
-	issuerURL  = "https://magicmall.cloudidaas.com"
-	authURL    = "https://magicmall.cloudidaas.com/open/oauth2/authorize"
-	tokenURL   = "https://api.open.cloudidaas.com/oauth2/v1/token"
-	profileURL = "https://api.open.cloudidaas.com/oauth2/v1/userinfo"
+	IssuerURL  = "https://magicmall.cloudidaas.com"
+	AuthURL    = "https://magicmall.cloudidaas.com/open/oauth2/authorize"
+	TokenURL   = "https://api.open.cloudidaas.com/oauth2/v1/token"
+	ProfileURL = "https://api.open.cloudidaas.com/oauth2/v1/userinfo"
 )
 
 // Provider is the implementation of `goth.Provider` for accessing idaas.
@@ -37,11 +37,7 @@ type Provider struct {
 // You should always call `idaas.New` to get a new provider.  Never try to
 // create one manually.
 func New(clientID, secret, orgURL, callbackURL string, scopes ...string) *Provider {
-	issuerURL := orgURL
-	authURL := issuerURL + "/open/oauth2/authorize"
-	tokenURL := issuerURL + "/oauth2/v1/token"
-	profileURL := issuerURL + "/oauth2/v1/userinfo"
-	return NewCustomisedURL(clientID, secret, callbackURL, authURL, tokenURL, issuerURL, profileURL, scopes...)
+	return NewCustomisedURL(clientID, secret, callbackURL, AuthURL, TokenURL, IssuerURL, ProfileURL, scopes...)
 }
 
 // NewCustomisedURL is similar to New(...) but can be used to set custom URLs to connect to
