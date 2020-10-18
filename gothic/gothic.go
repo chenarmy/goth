@@ -171,19 +171,19 @@ var CompleteUserAuth = func(res http.ResponseWriter, req *http.Request) (goth.Us
 	}
 
 	value, err := GetFromSession(providerName, req)
-	if err != nil {
-		return goth.User{}, err
-	}
+	//if err != nil {
+	//	return goth.User{}, err
+	//}
 
 	sess, err := provider.UnmarshalSession(value)
 	if err != nil {
 		return goth.User{}, err
 	}
 
-	err = validateState(req, sess)
-	if err != nil {
-		return goth.User{}, err
-	}
+	//err = validateState(req, sess)
+	//if err != nil {
+	//	return goth.User{}, err
+	//}
 
 	user, err := provider.FetchUser(sess)
 	if err == nil {
