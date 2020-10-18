@@ -14,6 +14,13 @@ import (
 	"golang.org/x/oauth2"
 )
 
+var (
+	issuerURL  = "https://magicmall.cloudidaas.com/open/oauth2/authorize"
+	authURL    = "https://magicmall.cloudidaas.com/open/oauth2/authorize"
+	tokenURL   = "https://api.open.cloudidaas.com/oauth2/v1/token"
+	profileURL = "https://api.open.cloudidaas.com/oauth2/v1/userinfo"
+)
+
 // Provider is the implementation of `goth.Provider` for accessing idaas.
 type Provider struct {
 	ClientKey    string

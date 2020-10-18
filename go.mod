@@ -11,7 +11,7 @@ require (
 	github.com/gorilla/sessions v1.1.1
 	github.com/jarcoal/httpmock v0.0.0-20180424175123-9c70cfe4a1da
 	github.com/lestrrat-go/jwx v0.9.0
-	github.com/markbates/going v1.0.0 // indirect
+	github.com/markbates/going v1.0.0
 	github.com/mrjones/oauth v0.0.0-20180629183705-f4e24b6d100c
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/stretchr/testify v1.4.0
