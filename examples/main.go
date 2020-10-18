@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/markbates/goth/providers/idaas"
 	"html/template"
 	"net/http"
 	"os"
@@ -135,6 +136,7 @@ func main() {
 		apple.New(os.Getenv("APPLE_KEY"), os.Getenv("APPLE_SECRET"), "http://localhost:3000/auth/apple/callback", nil, apple.ScopeName, apple.ScopeEmail),
 		strava.New(os.Getenv("STRAVA_KEY"), os.Getenv("STRAVA_SECRET"), "http://localhost:3000/auth/strava/callback"),
 		okta.New(os.Getenv("OKTA_ID"), os.Getenv("OKTA_SECRET"), os.Getenv("OKTA_ORG_URL"), "http://localhost:3000/auth/okta/callback", "openid", "profile", "email"),
+		idaas.New(os.Getenv("IDAAS_ID"), os.Getenv("IDAAS_SECRET"), os.Getenv("IDAAS_ORG_URL"), "http://localhost:3000/auth/idaas/callback", "basic"),
 		mastodon.New(os.Getenv("MASTODON_KEY"), os.Getenv("MASTODON_SECRET"), "http://localhost:3000/auth/mastodon/callback", "read:accounts"),
 	)
 
@@ -201,6 +203,7 @@ func main() {
 	m["apple"] = "Apple"
 	m["strava"] = "Strava"
 	m["okta"] = "Okta"
+	m["idaas"] = "Idaas"
 	m["mastodon"] = "Mastodon"
 
 	var keys []string

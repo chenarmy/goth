@@ -1,11 +1,11 @@
-package okta_test
+package idaas_test
 
 import (
 	"os"
 	"testing"
 
 	"github.com/markbates/goth"
-	"github.com/markbates/goth/providers/okta"
+	"github.com/markbates/goth/providers/idaas"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -24,7 +24,7 @@ func Test_NewCustomisedURL(t *testing.T) {
 	a := assert.New(t)
 	p := urlCustomisedURLProvider()
 	session, err := p.BeginAuth("test_state")
-	s := session.(*okta.Session)
+	s := session.(*idaas.Session)
 	a.NoError(err)
 	a.Contains(s.AuthURL, "http://authURL")
 }
@@ -40,7 +40,7 @@ func Test_BeginAuth(t *testing.T) {
 	a := assert.New(t)
 	p := provider()
 	session, err := p.BeginAuth("test_state")
-	s := session.(*okta.Session)
+	s := session.(*idaas.Session)
 	a.NoError(err)
 	a.Contains(s.AuthURL, os.Getenv("OKTA_ORG_URL"))
 }
@@ -53,15 +53,15 @@ func Test_SessionFromJSON(t *testing.T) {
 	session, err := p.UnmarshalSession(`{"AuthURL":"` + os.Getenv("OKTA_ORG_URL") + `/oauth2/v1/authorize", "AccessToken":"1234567890"}`)
 	a.NoError(err)
 
-	s := session.(*okta.Session)
+	s := session.(*idaas.Session)
 	a.Equal(s.AuthURL, os.Getenv("OKTA_ORG_URL")+"/oauth2/v1/authorize")
 	a.Equal(s.AccessToken, "1234567890")
 }
 
-func provider() *okta.Provider {
-	return okta.New(os.Getenv("OKTA_ID"), os.Getenv("OKTA_SECRET"), os.Getenv("OKTA_ORG_URL"), "/foo")
+func provider() *idaas.Provider {
+	return idaas.New(os.Getenv("OKTA_ID"), os.Getenv("OKTA_SECRET"), os.Getenv("OKTA_ORG_URL"), "/foo")
 }
 
-func urlCustomisedURLProvider() *okta.Provider {
-	return okta.NewCustomisedURL(os.Getenv("CLIENT_ID"), os.Getenv("CLIENT_SECRET"), "/foo", "http://authURL", "http://tokenURL", "http://issuerURL", "http://profileURL")
+func urlCustomisedURLProvider() *idaas.Provider {
+	return idaas.NewCustomisedURL(os.Getenv("CLIENT_ID"), os.Getenv("CLIENT_SECRET"), "/foo", "http://authURL", "http://tokenURL", "http://issuerURL", "http://profileURL")
 }

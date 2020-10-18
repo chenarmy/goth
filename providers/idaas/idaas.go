@@ -1,6 +1,6 @@
-// Package okta implements the OAuth2 protocol for authenticating users through okta.
+// Package idaas implements the OAuth2 protocol for authenticating users through idaas.
 // This package can be used as a reference implementation of an OAuth2 provider for Goth.
-package okta
+package idaas
 
 import (
 	"bytes"
@@ -14,7 +14,7 @@ import (
 	"golang.org/x/oauth2"
 )
 
-// Provider is the implementation of `goth.Provider` for accessing okta.
+// Provider is the implementation of `goth.Provider` for accessing idaas.
 type Provider struct {
 	ClientKey    string
 	Secret       string
@@ -26,14 +26,14 @@ type Provider struct {
 	profileURL   string
 }
 
-// New creates a new Okta provider and sets up important connection details.
-// You should always call `okta.New` to get a new provider.  Never try to
+// New creates a new Idaas provider and sets up important connection details.
+// You should always call `idaas.New` to get a new provider.  Never try to
 // create one manually.
 func New(clientID, secret, orgURL, callbackURL string, scopes ...string) *Provider {
-	issuerURL := orgURL + "/oauth2/default"
-	authURL := issuerURL + "/v1/authorize"
-	tokenURL := issuerURL + "/v1/token"
-	profileURL := issuerURL + "/v1/userinfo"
+	issuerURL := orgURL
+	authURL := issuerURL + "/open/oauth2/authorize"
+	tokenURL := issuerURL + "/oauth2/v1/token"
+	profileURL := issuerURL + "/oauth2/v1/userinfo"
 	return NewCustomisedURL(clientID, secret, callbackURL, authURL, tokenURL, issuerURL, profileURL, scopes...)
 }
 
@@ -43,7 +43,7 @@ func NewCustomisedURL(clientID, secret, callbackURL, authURL, tokenURL, issuerUR
 		ClientKey:    clientID,
 		Secret:       secret,
 		CallbackURL:  callbackURL,
-		providerName: "okta",
+		providerName: "idaas",
 		issuerURL:    issuerURL,
 		profileURL:   profileURL,
 	}
@@ -65,17 +65,17 @@ func (p *Provider) Client() *http.Client {
 	return goth.HTTPClientWithFallBack(p.HTTPClient)
 }
 
-// Debug is a no-op for the okta package.
+// Debug is a no-op for the idaas package.
 func (p *Provider) Debug(debug bool) {}
 
-// BeginAuth asks okta for an authentication end-point.
+// BeginAuth asks idaas for an authentication end-point.
 func (p *Provider) BeginAuth(state string) (goth.Session, error) {
 	return &Session{
 		AuthURL: p.config.AuthCodeURL(state),
 	}, nil
 }
 
-// FetchUser will go to okta and access basic information about the user.
+// FetchUser will go to idaas and access basic information about the user.
 func (p *Provider) FetchUser(session goth.Session) (goth.User, error) {
 	sess := session.(*Session)
 	user := goth.User{
@@ -146,16 +146,7 @@ func newConfig(provider *Provider, authURL, tokenURL string, scopes []string) *o
 
 func userFromReader(r io.Reader, user *goth.User) error {
 	u := struct {
-		Name       string `json:"name"`
-		Email      string `json:"email"`
-		FirstName  string `json:"given_name"`
-		LastName   string `json:"family_name"`
-		NickName   string `json:"nickname"`
-		ID         string `json:"sub"`
-		Locale     string `json:"locale"`
-		ProfileURL string `json:"profile"`
-		Username   string `json:"preferred_username"`
-		Zoneinfo   string `json:"zoneinfo"`
+		Username string `json:"user_id"`
 	}{}
 
 	err := json.NewDecoder(r).Decode(&u)
@@ -164,17 +155,9 @@ func userFromReader(r io.Reader, user *goth.User) error {
 	}
 
 	rd := make(map[string]interface{})
-	rd["ProfileURL"] = u.ProfileURL
-	rd["Locale"] = u.Locale
 	rd["Username"] = u.Username
-	rd["Zoneinfo"] = u.Zoneinfo
 
-	user.UserID = u.ID
-	user.Email = u.Email
-	user.Name = u.Name
-	user.NickName = u.NickName
-	user.FirstName = u.FirstName
-	user.LastName = u.LastName
+	user.UserID = u.Username
 
 	user.RawData = rd
 

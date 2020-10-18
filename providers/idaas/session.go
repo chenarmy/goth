@@ -1,4 +1,4 @@
-package okta
+package idaas
 
 import (
 	"encoding/json"
