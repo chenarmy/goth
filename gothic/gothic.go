@@ -170,6 +170,11 @@ var CompleteUserAuth = func(res http.ResponseWriter, req *http.Request) (goth.Us
 		return goth.User{}, err
 	}
 
+	if providerName == "idaas" {
+		sess, _ := provider.BeginAuth(SetState(req))
+		_ = StoreInSession(providerName, sess.Marshal(), req, res)
+	}
+
 	value, err := GetFromSession(providerName, req)
 	if err != nil {
 		return goth.User{}, err
